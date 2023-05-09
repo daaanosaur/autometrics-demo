@@ -1,18 +1,7 @@
-env/
-venv/
-.venv/
-.DS_Store
-
-personal-notes.md
-
-shame-deps/*.whl
-
-
-#custom
-data/
+# Custom
 .vscode/
-my_testing/
-autometrics-venv/
+personal-notes.md
+shame-deps/*.whl
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

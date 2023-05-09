@@ -1,11 +1,4 @@
 scrape_configs:
-  - job_name: python-autometrics-example-fastapi
-    metrics_path: /metrics
-    static_configs:
-      - targets: ["host.docker.internal:8000"]
-    # For a real deployment, you would want the scrape interval to be
-    # longer but for testing, you want the data to show up quickly
-    scrape_interval: 500ms
   - job_name: python-autometrics-example-example
     metrics_path: /metrics
     static_configs:

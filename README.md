@@ -40,7 +40,7 @@ PROMETHEUS_URL=http://localhost:8063
 Create and activate virtual env
 
 ```sh
-python3 -m venv env
+python3 -m venv .venv
 source env/bin/activate
 ```
 
@@ -53,7 +53,7 @@ pip install -r requirements.txt
 Run app
 
 ```sh
-uvicorn fastapi-example:app --reload
+uvicorn fastapi-example:app --reload --port=8080
 ```
 
 ### Install and Configure Autometrics VSCode Extension
