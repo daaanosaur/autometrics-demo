@@ -1,0 +1,16 @@
+anyio==3.6.2
+# autometrics==0.4
+shame-deps/autometrics-0.5-py3-none-any.whl
+# -e git+ssh://git@github.com/autometrics-dev/autometrics-py.git@0a11a33315bba5ba843b6b543e464b2871dd5206#egg=autometrics
+# -e ../autometrics-py
+click==8.1.3
+fastapi==0.95.0
+h11==0.14.0
+idna==3.4
+prometheus-client==0.16.0
+pydantic==1.10.7
+python-dotenv==1.0.0
+sniffio==1.3.0
+starlette==0.26.1
+typing_extensions==4.5.0
+uvicorn==0.21.1
