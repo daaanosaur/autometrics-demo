@@ -1,3 +1,7 @@
+# Autometrics :heart: FastAPI
+
+An example fastapi app that makes use of autometrics.
+
 ## Setup
 
 ### Setting up local Prometheus
@@ -14,9 +18,9 @@ Follow instructions in autometrics-dev. I used Docker:
 
 ```sh
 docker pull prom/prometheus
-# I'm using port 9092 for prometheus because 9090 is already taken on my machine
+# I'm using port 8063 for prometheus because 9090 is already taken on my machine
 docker run \
-    -p 9092:9090 \
+    -p 8063:9090 \
     -v /absolute/path/to/this/project/prometheus.yml:/etc/prometheus/prometheus.yml \
     prom/prometheus
 ```
@@ -49,7 +53,7 @@ Create and activate a virtual env
 
 ```sh
 python3 -m venv .venv
-source env/bin/activate
+source .venv/bin/activate
 ```
 
 Install dependencies
