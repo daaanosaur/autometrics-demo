@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Response
+from fastapi.responses import HTMLResponse
 import uvicorn
-from autometrics import autometrics
+from autometrics import autometrics, run_admin_server, get_autometrics_admin_html
 from prometheus_client import generate_latest
 
 app = FastAPI()
@@ -27,6 +28,13 @@ async def async_test_route():
     return {"Hello": message}
 
 
+# HACK - add the admin panel manually
+@autometrics
+@app.get("/autometrics/admin", response_class=HTMLResponse)
+def autometrics_admin():
+    return get_autometrics_admin_html()
+
+
 @autometrics
 def do_something():
     print("I did something")
@@ -39,4 +47,5 @@ async def my_async_function():
 
 
 if __name__ == "__main__":
+    run_admin_server()  # FIXME - server dies
     uvicorn.run(app, host="localhost", port=8080)
