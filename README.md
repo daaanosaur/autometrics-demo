@@ -79,3 +79,11 @@ Update the VSCode Extension settings to use the url to your local Prometheus ser
   "autometrics.prometheusUrl": "http://localhost:8063"
 }
 ```
+
+### Generating Data
+
+There is a script in the root of the repo that can be executed to generate data inside Prometheus. See: `generate-traffic.sh`
+
+You can copy-paste the script into a shell, or execute it directly from the repo.
+
+Traffic will appear for the `read_root` function.
