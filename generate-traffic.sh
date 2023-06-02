@@ -7,5 +7,5 @@ while true; do
     sleep "$sleep_time"
 
     # Fetch the URL using curl
-    curl -s -o /dev/null "https://example.com"  # Replace "https://example.com" with your desired URL
+    curl -s -o /dev/null "http://localhost:8080"  # Replace "https://example.com" with your desired URL
 done
