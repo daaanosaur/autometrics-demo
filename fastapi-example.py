@@ -1,11 +1,9 @@
 from fastapi import FastAPI, Response
-from fastapi.responses import HTMLResponse
 import uvicorn
 import random
-from autometrics import (
-    autometrics,
-    get_autometrics_admin_html,
-)
+from autometrics import autometrics
+from autometrics.objectives import Objective, ObjectiveLatency, ObjectivePercentile
+
 from prometheus_client import generate_latest
 
 app = FastAPI()
@@ -18,8 +16,14 @@ def metrics():
     return Response(generate_latest())
 
 
+API_SLO_HIGH_SUCCESS = Objective(
+    "My API SLO for High Success Rate (90%)",
+    success_rate=ObjectivePercentile.P90,
+)
+
+
 @app.get("/")
-@autometrics
+@autometrics(objective=API_SLO_HIGH_SUCCESS)
 def read_root():
     # Generate a random number between 1 and 10
     error_chance = random.randint(1, 10)
@@ -31,21 +35,11 @@ def read_root():
     return {"Hello": "World"}
 
 
+@autometrics(objective=API_SLO_HIGH_SUCCESS)
 @app.get("/async-test")
-@autometrics
 async def async_test_route():
     message = await my_async_function()
     return {"Hello": message}
-
-
-# HACK - add the admin panel UI manually
-@autometrics
-@app.get("/autometrics/admin", response_class=HTMLResponse)
-def autometrics_admin():
-    return get_autometrics_admin_html(prom_url="http://localhost:8063")
-    # return get_autometrics_admin_html(
-    #     cdn_root="http://localhost:8063", prom_url="http://localhost:8063"
-    # )
 
 
 @autometrics
@@ -53,7 +47,13 @@ def do_something():
     print("I did something")
 
 
-@autometrics
+RANDOM_SLO_HIGH_SUCCESS = Objective(
+    "My Random SLO for High Success Rate (99%)",
+    success_rate=ObjectivePercentile.P99,
+)
+
+
+@autometrics(objective=RANDOM_SLO_HIGH_SUCCESS)
 async def my_async_function():
     print("I did something async")
     return "Hello, async world!"
@@ -66,5 +66,4 @@ def my_new_function_with_args(arg1, arg2):
 
 
 if __name__ == "__main__":
-    # run_admin_server()  # FIXME - server dies
     uvicorn.run(app, host="localhost", port=8080)
