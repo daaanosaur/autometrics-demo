@@ -35,7 +35,7 @@ ANIMALS = ["snail", "rabbit", "panda"]
 @app.get("/")
 @autometrics(objective=API_SLO_HIGH_SUCCESS)
 def animals():
-    return {"animals": list_animals_helper}
+    return {"animals": list_animals_helper()}
 
 
 @app.get("/snail")
