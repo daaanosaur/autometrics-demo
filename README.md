@@ -4,13 +4,50 @@ An example fastapi app that makes use of autometrics.
 
 ## Setup
 
+### Running the app
+
+Create and activate a virtual env
+
+```sh
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Install dependencies
+
+```sh
+pip install -r requirements.txt
+```
+
+Run the app
+
+```sh
+uvicorn fastapi-example:app --reload --port=8080
+```
+
+Optionally generate traffic for all the api routes
+
+```sh
+chmod +x generate-traffic.sh
+./generate-traffic.sh
+```
+
 ### Setting up local Prometheus
 
 > Skip this if you already have Prometheus set up locally
 
+#### With `am`
+
+```sh
+# Install the Autometrics cli
+brew install autometrics-dev/tap/am
+# Start scraping localhost:8080
+am start :8080
+```
+
 #### With Quickmetrics
 
-There is a docker-compose setup in the [Quickmetrics repo](https://github.com/brettimus/quickmetrics), which can spin up Prometheus (and other components) for you.
+There is a docker-compose setup in the [Quickmetrics repo](https://github.com/autometrics-dev/quickmetrics), which can spin up Prometheus (and other components) for you.
 
 #### Without Quickmetrics
 
@@ -38,36 +75,6 @@ scrape_configs:
     scrape_interval: 200ms
 ```
 
-<!-- ### Configure app to use prometheus
-
-Configure `.env` to use the url to your local prometheus server:
-
-```sh
-# Again, I'm using 8063 because 9090 is already taken on my machine
-PROMETHEUS_URL=http://localhost:8063
-``` -->
-
-### Running the app
-
-Create and activate a virtual env
-
-```sh
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
-Install dependencies
-
-```sh
-pip install -r requirements.txt
-```
-
-Run the app
-
-```sh
-uvicorn fastapi-example:app --reload --port=8080
-```
-
 ### Install and Configure Autometrics VSCode Extension
 
 ...
@@ -85,5 +92,3 @@ Update the VSCode Extension settings to use the url to your local Prometheus ser
 There is a script in the root of the repo that can be executed to generate data inside Prometheus. See: `generate-traffic.sh`
 
 You can copy-paste the script into a shell, or execute it directly from the repo.
-
-Traffic will appear for the `read_root` function.
