@@ -26,7 +26,7 @@ API_SLO_HIGH_SUCCESS = Objective(
 
 API_QUICK_RESPONSES = Objective(
     "Animal API SLO for Low Latency (100ms)",
-    success_rate=ObjectiveLatency.Ms100,
+    latency=(ObjectiveLatency.Ms100, ObjectivePercentile.P99),
 )
 
 ANIMALS = ["snail", "rabbit", "panda"]
