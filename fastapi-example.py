@@ -29,7 +29,7 @@ API_QUICK_RESPONSES = Objective(
     latency=(ObjectiveLatency.Ms100, ObjectivePercentile.P99),
 )
 
-ANIMALS = ["snail", "rabbit", "panda"]
+ANIMALS = ["snail", "rabbit", "panda", "beaver"]
 
 
 @app.get("/")
@@ -59,6 +59,13 @@ def panda():
     # Pandas are clumsy. They randomly error 10% of the time
     randomly_error()
     return {"suggestion": "Let's eat bamboo"}
+
+
+@app.get("/beaver")
+@autometrics(objective=API_SLO_HIGH_SUCCESS)
+def beaver():
+    # Beavers are hard working. They never error
+    return {"suggestion": "Let's build a dam"}
 
 
 @autometrics

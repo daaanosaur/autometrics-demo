@@ -29,4 +29,11 @@ while true; do
     if [ $random_number -le 9 ]; then
         curl -s -o /dev/null "http://localhost:8080/panda" 
     fi
+
+    # Call beaver api with a 50% chance
+    random_number=$((RANDOM % 2))
+    # If the random number is 0, execute the code
+    if [ $random_number -eq 0 ]; then
+        curl -s -o /dev/null "http://localhost:8080/beaver" 
+    fi
 done
