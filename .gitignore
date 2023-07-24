@@ -2,6 +2,7 @@
 .vscode/
 personal-notes.md
 shame-deps/*.whl
+data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
