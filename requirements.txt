@@ -1,5 +1,5 @@
 anyio==3.6.2
-autometrics==0.6
+autometrics==0.8
 
 # This is how you would use a local build of autometrics:
 # shame-deps/autometrics-0.5-py3-none-any.whl
@@ -11,7 +11,7 @@ click==8.1.3
 fastapi==0.95.0
 h11==0.14.0
 idna==3.4
-prometheus-client==0.16.0
+prometheus-client==0.17.1
 pydantic==1.10.7
 python-dotenv==1.0.0
 sniffio==1.3.0
