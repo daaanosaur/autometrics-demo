@@ -55,9 +55,9 @@ def rabbit():
 
 @app.get("/panda")
 @autometrics(objective=API_SLO_HIGH_SUCCESS)
-def panda():
-    # Pandas are clumsy. They randomly error 10% of the time
-    randomly_error()
+async def panda():
+    # Pandas are clumsy. They randomly error sometimes
+    await clumsy_panda_service()
     return {"suggestion": "Let's eat bamboo"}
 
 
@@ -75,10 +75,10 @@ def list_animals_helper():
 
 
 @autometrics
-def randomly_error():
-    """Randomly raise an error with a 10% chance"""
-    # Generate a random number between 1 and 10
-    error_chance = random.randint(1, 10)
+async def clumsy_panda_service():
+    """Randomly raise an error with a 50% chance"""
+    # Generate a random number between 1 and 2
+    error_chance = random.randint(1, 2)
 
     # If the random number is 1, raise an error
     if error_chance == 1:
