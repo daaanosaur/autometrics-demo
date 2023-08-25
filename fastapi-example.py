@@ -41,8 +41,8 @@ def animals():
 @app.get("/snail")
 @autometrics(objective=API_QUICK_RESPONSES)
 async def snail():
-    # Snails are slow. They have sometimes have high latency
-    await random_delay()
+    # Snails are slow sometimes.
+    await snail_service()
     return {"suggestion": "Let's take it easy"}
 
 
@@ -56,7 +56,7 @@ def rabbit():
 @app.get("/panda")
 @autometrics(objective=API_SLO_HIGH_SUCCESS)
 async def panda():
-    # Pandas are clumsy. They randomly error sometimes
+    # Pandas are clumsy. They error sometimes
     await clumsy_panda_service()
     return {"suggestion": "Let's eat bamboo"}
 
@@ -86,7 +86,7 @@ async def clumsy_panda_service():
 
 
 @autometrics
-async def random_delay():
+async def snail_service():
     """Generate a random latency between 0 and 110ms"""
     delay = random.randint(0, 11) * 0.01
     await asyncio.sleep(delay)
