@@ -22,7 +22,7 @@ pip install -r requirements.txt
 Run the app
 
 ```sh
-uvicorn fastapi-example:app --reload --port=8080
+uvicorn app:app --reload --port=8080
 ```
 
 Optionally generate traffic for all the api routes
