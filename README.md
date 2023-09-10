@@ -38,6 +38,8 @@ chmod +x generate-traffic.sh
 
 #### With `am`
 
+You can use the `am` CLI to quickly spin up Prometheus and the Autometrics Explorer dashboard:
+
 ```sh
 # Install the Autometrics cli
 brew install autometrics-dev/tap/am
@@ -45,45 +47,24 @@ brew install autometrics-dev/tap/am
 am start :8080
 ```
 
-#### With Quickmetrics
-
-There is a docker-compose setup in the [Quickmetrics repo](https://github.com/autometrics-dev/quickmetrics), which can spin up Prometheus (and other components) for you.
-
-#### Without Quickmetrics
-
-Follow instructions in autometrics-dev. I used Docker:
+You can also run the CLI via docker:
 
 ```sh
-docker pull prom/prometheus
-# I'm using port 8063 for prometheus because 9090 is already taken on my machine
 docker run \
-    -p 8063:9090 \
-    -v /absolute/path/to/this/project/prometheus.yml:/etc/prometheus/prometheus.yml \
-    prom/prometheus
+  --network host
+  -e LISTEN_ADDRESS=0.0.0.0:6789 \
+  -p 6789:6789 \
+  -p 9090:9090 \
+  autometrics/am start :8080
 ```
 
-where the `prometheus.yml` file is similar to the one in this repo:
+### Install and Configure the Autometrics VSCode Extension
 
-```yaml
-scrape_configs:
-  - job_name: python-autometrics-example-fastapi
-    metrics_path: /metrics
-    static_configs:
-      - targets: ["localhost:8080"]
-    # For a real deployment, you would want the scrape interval to be
-    # longer but for testing, you want the data to show up quickly
-    scrape_interval: 200ms
-```
-
-### Install and Configure Autometrics VSCode Extension
-
-...
-
-Update the VSCode Extension settings to use the url to your local Prometheus server. Since I'm not using the default port (`9090`), I need to update the settings:
+Update the VSCode Extension settings to use the url to your local Prometheus server. Since we're using `am` to run prometheus, we need to update the settings:
 
 ```json
 {
-  "autometrics.prometheusUrl": "http://localhost:8063"
+  "autometrics.prometheusUrl": "http://localhost:9090/prometheus"
 }
 ```
 
