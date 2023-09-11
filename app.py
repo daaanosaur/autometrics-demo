@@ -2,13 +2,14 @@ from fastapi import FastAPI, Response
 import uvicorn
 import asyncio
 import random
-from autometrics import autometrics
+from autometrics import autometrics, init
 from autometrics.objectives import Objective, ObjectiveLatency, ObjectivePercentile
-
 from prometheus_client import generate_latest
+from git_utils import get_git_commit, get_git_branch
 
 app = FastAPI()
 
+init(tracker="prometheus", commit=get_git_commit(), branch=get_git_branch())
 
 # Set up a metrics endpoint for Prometheus to scrape
 # `generate_latest` returns the latest metrics data in the Prometheus text format
@@ -94,3 +95,4 @@ async def snail_service():
 
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=8080)
+
