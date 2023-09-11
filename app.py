@@ -9,7 +9,9 @@ from git_utils import get_git_commit, get_git_branch
 
 app = FastAPI()
 
-init(tracker="prometheus", commit=get_git_commit(), branch=get_git_branch())
+VERSION = "0.0.1"
+
+init(tracker="prometheus", version=VERSION, commit=get_git_commit(), branch=get_git_branch())
 
 # Set up a metrics endpoint for Prometheus to scrape
 # `generate_latest` returns the latest metrics data in the Prometheus text format
