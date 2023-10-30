@@ -9,7 +9,7 @@ from git_utils import get_git_commit, get_git_branch
 
 app = FastAPI()
 
-VERSION = "0.0.1"
+VERSION = "0.0.4"
 
 init(tracker="prometheus", version=VERSION, commit=get_git_commit(), branch=get_git_branch())
 
@@ -23,12 +23,12 @@ def metrics():
 # Define Objectives for the api routes
 
 API_SLO_HIGH_SUCCESS = Objective(
-    "Animal API Route SLO for High Success Rate (99%)",
+    "Animal API Route SLO for High Success Rate",
     success_rate=ObjectivePercentile.P99,
 )
 
 API_QUICK_RESPONSES = Objective(
-    "Animal API SLO for Low Latency (100ms)",
+    "Animal API SLO for Low Latency",
     latency=(ObjectiveLatency.Ms100, ObjectivePercentile.P99),
 )
 
@@ -44,6 +44,7 @@ def animals():
 @app.get("/snail")
 @autometrics(objective=API_QUICK_RESPONSES)
 async def snail():
+    await validate_animal()
     # Snails are slow sometimes.
     await snail_service()
     return {"suggestion": "Let's take it easy"}
@@ -60,6 +61,7 @@ def rabbit():
 @autometrics(objective=API_SLO_HIGH_SUCCESS)
 async def panda():
     # Pandas are clumsy. They error sometimes
+    await validate_animal()
     await clumsy_panda_service()
     return {"suggestion": "Let's eat bamboo"}
 
@@ -87,6 +89,12 @@ async def clumsy_panda_service():
     if error_chance == 1:
         raise Exception("Random error occurred!")
 
+
+@autometrics
+async def validate_animal():
+    delay = random.randint(0, 2) * 0.01
+    await asyncio.sleep(delay)
+    return True
 
 @autometrics
 async def snail_service():
